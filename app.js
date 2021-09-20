@@ -1,19 +1,15 @@
 const express = require('express');
-const app = express();
 const mongoose = require('mongoose');
-app.set('view engine','ejs');
-const url ='mongodb+srv://ag:test1234@nodecluster.nqf64.mongodb.net/myFirstDatabase';
-mongoose.connect(url).then((result)=>{
-    console.log(result);
-    console.log("result");
-}).catch((err)=>{
-    console.log(err);
-    console.log("error");
-})
-app.get('/',(req,res)=>{
-    res.render('home');
-})
-app.get('/receipt',(req,res)=>{
-    res.render('home');
-})
-app.listen(8080);
+const authRoutes =require('./routes/authRoute');
+
+const app = express();
+app.use(express.static('public'));
+app.set('view engine', 'ejs');
+const url = 'mongodb+srv://ag:test1234@nodecluster.nqf64.mongodb.net/node-auth';
+mongoose.connect(url)
+    .then(() => app.listen(8080))
+    .catch(err => console.log(err));
+
+app.get('/', (req, res) =>res.render('home'));
+app.get('/smoothies', (req, res) => res.render('smoothies'));
+app.use(authRoutes);
