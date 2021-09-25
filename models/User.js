@@ -25,7 +25,6 @@ userSchema.pre('save',function(next){
     bcrypt.genSalt(saltRounds,(err,salt)=>{
         bcrypt.hash(this.password,salt,(error,hash)=>{
             this.password = hash;
-            console.log("user about to create this",this);
             next();
         })
     })
