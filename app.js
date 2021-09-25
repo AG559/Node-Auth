@@ -1,9 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes =require('./routes/authRoute');
+const path=require('path');
 
 const app = express();
-app.use(express.static('public'));
+
+app.use(express.static(path.join(__dirname,'public')));
 app.use(express.json());
 app.set('view engine', 'ejs');
 const url = 'mongodb+srv://ag:test1234@nodecluster.nqf64.mongodb.net/node-auth';
