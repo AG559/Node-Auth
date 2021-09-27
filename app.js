@@ -4,6 +4,7 @@ const authRoutes = require('./routes/authRoute');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const app = express();
+const {checkUser} = require('./middleware/authWare');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
@@ -15,5 +16,5 @@ mongoose.connect(url, { useNewUrlParser: true })
     .catch(err => console.log(err));
 
 app.get('/', (req, res) => res.render('home'));
-app.get('/smoothies', (req, res) => res.render('smoothies'));
+app.get('/smoothies',checkUser, (req, res) => res.render('smoothies'));
 app.use(authRoutes);
